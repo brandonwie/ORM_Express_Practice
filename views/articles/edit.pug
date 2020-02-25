@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+  h2= title
+  
+  include errors
+  
+  form(action="/articles/" + article.id + "/edit", method="post")
+    include form

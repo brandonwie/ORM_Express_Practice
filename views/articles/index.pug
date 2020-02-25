@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  div.subheader
+    h2 Articles
+    a(href="/articles/new", class="btn-new") Create Article &#43;
+    
+  each article in articles
+    article
+      h3= article.title
+      include by_line
+      p= article.body
+      a(href = "/articles/" + article.id) Read More &rarr;

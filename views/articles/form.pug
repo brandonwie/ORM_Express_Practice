@@ -1,0 +1,10 @@
+div
+  label(for="title") Title:
+  input(type="text", name="title" value=article.title)
+div
+  label(for="author") Author:
+  input(type="text", name="author" value=article.author)
+div
+  label(for="body") Body:
+  textarea(name="body")= article.body
+input(type="submit")
