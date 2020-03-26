@@ -17,8 +17,11 @@ function asyncHandler(cb) {
 router.get(
   "/",
   asyncHandler(async (req, res) => {
+    const articles = await Article.findAll({
+      order: [["createdAt", "DESC"]],
+    });
     res.render("articles/index", {
-      articles: {},
+      articles,
       title: "Sequelize-It!",
     });
   })
@@ -36,8 +39,24 @@ router.get("/new", (req, res) => {
 router.post(
   "/",
   asyncHandler(async (req, res) => {
-    article = await Article.create(req.body);
-    res.redirect("/articles/" + article.id);
+    let article;
+    try {
+      article = await Article.create(req.body);
+      res.redirect("/articles/" + article.id);
+    } catch (error) {
+      if (
+        error.name === "SequelizeValidationError"
+      ) {
+        article = await Article.build(req.body);
+        res.render("articles/new", {
+          article,
+          errors: error.errors,
+          title: "New Article",
+        });
+      } else {
+        throw error; // error caught in the asyncHandler's catch block
+      }
+    }
   })
 );
 
@@ -88,7 +107,7 @@ router.post(
       );
       if (article) {
         await article.update(req.body);
-        res.redirect("/articles/" + article.id);
+        res.redirect("/articles" + article.id);
       } else {
         res.sendStatus(404);
       }
@@ -97,7 +116,7 @@ router.post(
         error.name === "SequelizeValidationError"
       ) {
         article = await Article.build(req.body);
-        article.id = req.params.id;
+        article.id = req.params.id; // make sure correct article gets updated
         res.render("articles/edit", {
           article,
           errors: error.errors,

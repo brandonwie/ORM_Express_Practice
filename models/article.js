@@ -5,7 +5,7 @@ const moment = require("moment");
 module.exports = (sequelize) => {
   class Article extends Sequelize.Model {
     publishedAt() {
-      const date = moment(this.createdAt).format(
+      const date = moment(this.createAt).format(
         "MMMM D, YYYY, h:mma"
       );
       return date;
