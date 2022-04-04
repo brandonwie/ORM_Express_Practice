@@ -14,7 +14,7 @@
     "moment": "^2.24.0",
     "morgan": "~1.9.1",
     "nodemon": "^1.19.2",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "sequelize": "^5.18.4",
     "sequelize-cli": "^5.5.1",
     "sqlite3": "^4.1.0"
